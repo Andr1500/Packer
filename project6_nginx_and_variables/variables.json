@@ -1,0 +1,5 @@
+{
+  "ami_name": "nginx-file-and-env-variables",
+  "version": "0.1",
+  "instance_type": "{{env `instance_type`}}"
+}

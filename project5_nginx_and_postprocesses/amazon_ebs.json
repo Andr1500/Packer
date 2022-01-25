@@ -1,0 +1,35 @@
+
+{
+  "builders": [
+      {
+      "type": "amazon-ebs",
+      "region": "eu-central-1",
+      "source_ami": "ami-0d527b8c289b4af7f",
+      "instance_type": "t3.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "packer-ubuntu-linux-nginx-{{timestamp}}",
+      "tags": {
+        "OS_Version": "Debian",
+        "Release": "Latest",
+        "Base_AMI_Name": "{{ .SourceAMIName }}",
+        "Extra": "{{ .SourceAMITags.TagName }}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo apt update",
+        "sudo apt install nginx -y"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "output.json"
+    }
+  ]
+}
